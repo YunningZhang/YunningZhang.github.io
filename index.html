@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yunning Zhang</title>
+<meta name="description" content="Yunning Zhang: data analyst and M.S. candidate in Computer and Information Systems Security at Johns Hopkins University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one centered column; profile header over a chart-grid banner, sticky section nav, timeline for experience, metric chips pull each result's number forward. */
+:root {
+  --bg: #f6f8fa;
+  --surface: #ffffff;
+  --fg: #16202b;
+  --muted: #5a6878;
+  --line: #dde3ea;
+  --accent: #1d5c8f;
+  --accent-soft: #e3eef7;
+  --banner: #0f2c45;
+  --banner-line: rgba(255,255,255,.08);
+  --banner-trace: #7fb8e6;
+  --display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e141b; --surface: #151d26; --fg: #e4eaf0; --muted: #94a3b3; --line: #26323f;
+    --accent: #7fb8e6; --accent-soft: #1a2c3d; --banner: #0a2033; --banner-line: rgba(255,255,255,.06); --banner-trace: #7fb8e6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e141b; --surface: #151d26; --fg: #e4eaf0; --muted: #94a3b3; --line: #26323f;
+  --accent: #7fb8e6; --accent-soft: #1a2c3d; --banner: #0a2033; --banner-line: rgba(255,255,255,.06); --banner-trace: #7fb8e6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+
+.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
+.brand { font-family: var(--display); font-weight: 800; color: var(--fg); text-decoration: none; letter-spacing: -.01em; }
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.nav ul::-webkit-scrollbar { display: none; }
+.nav a.link { display: block; padding: 6px 10px; border-radius: 6px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.nav a.link:hover, .nav a.link.active { color: var(--fg); background: var(--accent-soft); }
+
+/* Banner */
+.banner { height: 180px; background-color: var(--banner);
+  background-image: linear-gradient(var(--banner-line) 1px, transparent 1px), linear-gradient(90deg, var(--banner-line) 1px, transparent 1px);
+  background-size: 36px 36px; position: relative; overflow: hidden; }
+.banner svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.banner .trace { fill: none; stroke: var(--banner-trace); stroke-width: 2; opacity: .75; }
+.banner .area { fill: var(--banner-trace); opacity: .08; }
+.banner .dot { fill: var(--banner-trace); }
+
+/* Profile */
+.profile { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: -64px; position: relative; padding-bottom: 8px; }
+.avatar { width: 128px; height: 128px; border-radius: 50%; background: var(--surface); border: 4px solid var(--bg); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 44px; color: var(--accent); box-shadow: 0 6px 24px rgba(0,0,0,.12); overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profile h1 { font-size: clamp(32px, 6vw, 44px); font-weight: 800; letter-spacing: -.02em; margin-top: 16px; }
+.role { color: var(--muted); font-size: 17px; margin: 6px 0 0; max-width: 34em; }
+.role a { font-weight: 500; }
+.contacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+.chip-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 500 14px var(--body); text-decoration: none; cursor: pointer; }
+.chip-btn:hover { border-color: var(--accent); }
+.chip-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.chip-btn svg { width: 16px; height: 16px; flex: none; }
+.mono { font-family: var(--mono); }
+
+/* Sections */
+section { padding-block: 56px 8px; scroll-margin-top: 64px; }
+.sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; }
+.sec-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -.01em; }
+.sec-head::after { content: ""; flex: 1; height: 1px; background: var(--line); align-self: center; }
+
+.about p { margin: 0 0 14px; max-width: 65ch; color: var(--fg); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 24px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.fact .k { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.fact .v { font-weight: 600; margin-top: 2px; }
+
+/* Timeline */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
+.entry { display: grid; grid-template-columns: 150px 1fr; gap: 24px; }
+.when { font: 500 13px var(--mono); color: var(--muted); padding-top: 4px; font-variant-numeric: tabular-nums; }
+.when .loc { display: block; font-family: var(--body); font-size: 13px; margin-top: 2px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; min-width: 0; }
+.card h3 { font-size: 19px; font-weight: 700; }
+.card .org { color: var(--accent); font-weight: 600; margin-top: 2px; }
+.card ul { margin: 12px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+.card li { color: var(--fg); }
+.card li::marker { color: var(--muted); }
+.metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.metric { font: 500 12.5px var(--mono); background: var(--accent-soft); color: var(--accent); padding: 4px 10px; border-radius: 6px; font-variant-numeric: tabular-nums; }
+.proj-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.proj-links .k { flex-basis: 100%; font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.view-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--accent); border-radius: 8px; background: var(--accent); color: var(--surface); font: 600 14.5px var(--body); text-decoration: none; cursor: pointer; text-align: left; box-shadow: 0 1px 2px rgba(0,0,0,.08); transition: filter .15s, transform .15s; }
+.view-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) { .view-btn { transition: none; } .view-btn:hover { transform: none; } }
+.view-btn svg { width: 17px; height: 17px; flex: none; }
+.view-btn .fmt { font: 500 11px var(--mono); padding: 1px 6px; border-radius: 4px; background: color-mix(in srgb, var(--surface) 22%, transparent); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tag { font-size: 12.5px; color: var(--muted); border: 1px solid var(--line); padding: 2px 9px; border-radius: 999px; }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.skills .card h3 { font-size: 13px; font-family: var(--mono); font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+
+/* Projects */
+.projects { display: grid; gap: 18px; }
+.proj-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+.proj-top .when { padding: 0; }
+
+footer { margin-top: 72px; border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+
+@media (max-width: 640px) {
+  .entry { grid-template-columns: 1fr; gap: 8px; }
+  .when .loc { display: inline; margin-left: 8px; }
+  .banner { height: 140px; }
+  .nav .brand { display: none; }
+  .card { padding: 16px 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">Yunning Zhang</a>
+    <ul>
+      <li><a class="link" href="#about">About</a></li>
+      <li><a class="link" href="#experience">Experience</a></li>
+      <li><a class="link" href="#projects">Projects</a></li>
+      <li><a class="link" href="#skills">Skills</a></li>
+      <li><a class="link" href="#education">Education</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="banner" aria-hidden="true">
+    <svg viewBox="0 0 1200 180" preserveAspectRatio="none">
+      <path class="area" d="M0,140 L90,128 L180,134 L270,110 L360,118 L450,92 L540,100 L630,76 L720,84 L810,60 L900,70 L990,46 L1080,54 L1200,30 L1200,180 L0,180 Z"/>
+      <path class="trace" d="M0,140 L90,128 L180,134 L270,110 L360,118 L450,92 L540,100 L630,76 L720,84 L810,60 L900,70 L990,46 L1080,54 L1200,30"/>
+    </svg>
+  </div>
+  <div class="wrap profile">
+    <!-- To use a photo: replace "YZ" with <img src="avatar.jpg" alt="Yunning Zhang"> -->
+    <div class="avatar" aria-hidden="true">YZ</div>
+    <h1>Yunning Zhang</h1>
+    <p class="role">Data Analyst · M.S. in Computer and Information Systems Security at <a href="https://www.jhu.edu/" target="_blank" rel="noopener">Johns Hopkins University</a></p>
+    <div class="contacts">
+      <button class="chip-btn primary" type="button" data-doc="resume" data-pages="1" data-title="Résumé">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Résumé
+      </button>
+      <button class="chip-btn" id="copy-email" type="button" title="Copy email address">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span class="mono" id="email-text">yzhan878@jhu.edu</span>
+      </button>
+      <span class="chip-btn" style="cursor:default">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        Baltimore, MD
+      </span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="about" class="about">
+    <div class="sec-head"><h2>About</h2></div>
+    <p>I turn messy operational data into numbers people can act on. Across internships at Mechcraft Tech, Hilton and Merit Data, I have cleaned and validated datasets, built segmentation models, automated recurring reports, and written up findings as business recommendations.</p>
+    <p>I am now completing an M.S. in Computer and Information Systems Security at Johns Hopkins, where my coursework covers security analytics, applied statistics, machine learning and time series analysis. I work mostly in Python, SQL, Excel, Tableau and Power BI.</p>
+    <div class="facts">
+      <div class="fact"><div class="k">Focus</div><div class="v">Data &amp; security analytics</div></div>
+      <div class="fact"><div class="k">Degree in progress</div><div class="v">M.S., JHU · May 2027</div></div>
+      <div class="fact"><div class="k">Core tools</div><div class="v">Python · SQL · Tableau</div></div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><h2>Experience</h2></div>
+    <ol class="timeline" reversed>
+      <li class="entry">
+        <div class="when">Jun – Aug 2026<span class="loc">New York, NY</span></div>
+        <article class="card">
+          <h3>Data Analyst Intern</h3>
+          <div class="org">Mechcraft Tech</div>
+          <ul>
+            <li>Built an analysis-ready equity dataset covering 2 years and 5 stocks with Python, pandas and yfinance: standardized types, removed duplicates, handled missing values and flagged anomalies</li>
+            <li>Identified 2 behavioral segments among 149 prospective users with K-means in scikit-learn, encoding demographic variables and standardizing activity features</li>
+            <li>Compared segment-level logins, usage duration, clicks and report activity to recommend differentiated conversion, retention and paid-product targeting</li>
+            <li>Delivered 5 analytics projects with Python, Excel and written reports linking findings to business recommendations</li>
+          </ul>
+          <div class="metrics"><span class="metric">149 users · 2 segments</span><span class="metric">5 projects delivered</span></div>
+          <div class="proj-links">
+            <span class="k">View project work</span>
+            <button type="button" class="view-btn" data-doc="semiconductor_event_study_deck" data-pages="5" data-title="Semiconductor Event Study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><span>Semiconductor Event Study</span><span class="fmt">Slides</span></button>
+            <button type="button" class="view-btn" data-doc="pairs_trading_backtest" data-pages="4" data-title="S&amp;P 500 Pairs Trading Backtest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><span>S&amp;P 500 Pairs Trading Backtest</span><span class="fmt">Report</span></button>
+            <button type="button" class="view-btn" data-doc="data_provider_research" data-pages="6" data-title="Market Data Provider Research"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><span>Market Data Provider Research</span><span class="fmt">Notebook</span></button>
+          </div>
+        </article>
+      </li>
+      <li class="entry">
+        <div class="when">Mar – Jun 2026<span class="loc">Shanghai, China</span></div>
+        <article class="card">
+          <h3>IT PMO Digital Analysis Intern</h3>
+          <div class="org">Hilton</div>
+          <ul>
+            <li>Validated monthly hotel-opening reports for 100+ properties across Eastern China using Excel PivotTables, lookup formulas and Power BI exports</li>
+            <li>Resolved reporting discrepancies with project owners and escalated unresolved issues to the PMO manager</li>
+            <li>Owned recurring data checks across 2 reporting cycles, saving 4–6 reconciliation hours per month</li>
+            <li>Maintained current hotel-opening records for PMO reviews and cross-functional follow-up</li>
+          </ul>
+          <div class="metrics"><span class="metric">100+ properties</span><span class="metric">−4–6 hrs / month</span></div>
+        </article>
+      </li>
+      <li class="entry">
+        <div class="when">Jul – Aug 2024<span class="loc">Xi'an, China</span></div>
+        <article class="card">
+          <h3>Data Analysis Intern</h3>
+          <div class="org">Merit Data</div>
+          <ul>
+            <li>Cut SQL query runtime by 68% across 15K+ relational records through query profiling and indexing</li>
+            <li>Automated Forguncy reporting workflows, connecting form inputs with relational records and reducing manual processing time by 32%</li>
+            <li>Cleaned and standardized 10K+ unstructured meeting records in Python, improving data completeness and reporting accuracy by 28%</li>
+          </ul>
+          <div class="metrics"><span class="metric">−68% query runtime</span><span class="metric">−32% manual time</span><span class="metric">+28% accuracy</span></div>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head"><h2>Projects</h2></div>
+    <div class="projects">
+      <article class="card">
+        <div class="proj-top">
+          <h3>Telecom Customer Churn &amp; Revenue Analysis</h3>
+          <span class="when">May – Jun 2026</span>
+        </div>
+        <ul>
+          <li>Investigated churn and revenue exposure across 7,000+ customer records in SQL and Python, comparing contract types, service usage and segments</li>
+          <li>Quantified a 26.5% churn rate and about $137K in monthly recurring revenue at risk, focusing retention recommendations on revenue exposure</li>
+          <li>Built an interactive Tableau dashboard with KPI cards, churn-driver views, geographic analysis and dynamic filters</li>
+        </ul>
+        <div class="metrics"><span class="metric">26.5% churn</span><span class="metric">$137K MRR at risk</span><span class="metric">7,000+ records</span></div>
+        <div class="tags"><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Tableau</span></div>
+        <div class="proj-links">
+          <a class="view-btn" href="https://public.tableau.com/app/profile/yunning.zhang5500/viz/TelecomCustomerChurnProject_17873840409660/TelecomCustomerChurnAnalysis" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>View Tableau dashboard</span></a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="proj-top">
+          <h3>Wisconsin Mortgage Lending &amp; Applicant Demographics</h3>
+          <span class="when">Feb – Apr 2023</span>
+        </div>
+        <ul>
+          <li>Prepared 50K+ Wisconsin mortgage records in Python, standardizing missing and exempt values for consistent institutional comparisons</li>
+          <li>Compared lending patterns across banks by Legal Entity Identifier (LEI), analyzing applicant age, race, co-applicant characteristics and property values</li>
+          <li>Found an approximately 0.25 percentage-point gap in average interest rates between selected institutions</li>
+          <li>Implemented a binary search tree with key lookup and traversal to organize loan records for retrieval</li>
+        </ul>
+        <div class="metrics"><span class="metric">50K+ records</span><span class="metric">~0.25 pp rate gap</span></div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Data structures</span></div>
+        <div class="proj-links">
+          <button type="button" class="view-btn" data-doc="wisconsin_mortgage" data-pages="5" data-title="Wisconsin Mortgage Lending: code &amp; results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><span>View code &amp; results</span><span class="fmt">5 pages</span></button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><h2>Skills</h2></div>
+    <div class="skills">
+      <div class="card"><h3>Programming &amp; Databases</h3><div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">R</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span></div></div>
+      <div class="card"><h3>BI &amp; Reporting</h3><div class="tags"><span class="tag">Excel</span><span class="tag">Tableau</span><span class="tag">Power BI</span><span class="tag">Forguncy</span><span class="tag">KPI dashboards</span><span class="tag">Report automation</span></div></div>
+      <div class="card"><h3>Python Libraries</h3><div class="tags"><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">scikit-learn</span><span class="tag">yfinance</span></div></div>
+      <div class="card"><h3>Data Preparation</h3><div class="tags"><span class="tag">Data cleaning</span><span class="tag">Data validation</span><span class="tag">Feature engineering</span></div></div>
+      <div class="card"><h3>Analytics &amp; Statistics</h3><div class="tags"><span class="tag">EDA</span><span class="tag">A/B testing</span><span class="tag">Hypothesis testing</span><span class="tag">Customer segmentation</span><span class="tag">Churn analysis</span></div></div>
+      <div class="card"><h3>Machine Learning</h3><div class="tags"><span class="tag">K-means</span><span class="tag">Logistic regression</span><span class="tag">Decision tree</span><span class="tag">SVM</span><span class="tag">KNN</span><span class="tag">Cross-validation</span></div></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="sec-head"><h2>Education</h2></div>
+    <ol class="timeline" reversed>
+      <li class="entry">
+        <div class="when">Expected May 2027<span class="loc">Baltimore, MD</span></div>
+        <article class="card">
+          <h3>M.S. in Computer and Information Systems Security</h3>
+          <div class="org">Johns Hopkins University</div>
+          <div class="tags"><span class="tag">Security Analytics</span><span class="tag">Applied Statistics &amp; Data Analysis</span><span class="tag">Machine Learning</span><span class="tag">Time Series Analysis</span></div>
+        </article>
+      </li>
+      <li class="entry">
+        <div class="when">Aug 2025<span class="loc">Madison, WI</span></div>
+        <article class="card">
+          <h3>B.S. in Information Science</h3>
+          <div class="org">University of Wisconsin–Madison</div>
+          <div class="tags"><span class="tag">Data Science Programming</span><span class="tag">Data Science Modeling</span><span class="tag">Concepts of Data &amp; Information Science</span></div>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Yunning Zhang</span>
+    <span class="mono">yzhan878@jhu.edu</span>
+  </div>
+</footer>
+
+<dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+  <div class="viewer-bar">
+    <h3 id="viewer-title"></h3>
+    <button class="viewer-close" type="button" id="viewer-close" aria-label="Close">×</button>
+  </div>
+  <div class="viewer-body" id="viewer-body"></div>
+</dialog>
+
+<script>
+(function () {
+  var dlg = document.getElementById('viewer');
+  var body = document.getElementById('viewer-body');
+  var title = document.getElementById('viewer-title');
+
+  function open(doc, pages, name) {
+    title.textContent = name;
+    body.innerHTML = '';
+    for (var n = 1; n <= pages; n++) {
+      var img = document.createElement('img');
+      img.src = 'projects/pages/' + doc + '-' + n + '.jpg';
+      img.alt = name + ', page ' + n + ' of ' + pages;
+      img.loading = n === 1 ? 'eager' : 'lazy';
+      body.appendChild(img);
+    }
+    body.scrollTop = 0;
+    dlg.showModal();
+  }
+
+  document.querySelectorAll('[data-doc]').forEach(function (b) {
+    b.addEventListener('click', function () { open(b.getAttribute('data-doc'), +b.getAttribute('data-pages'), b.getAttribute('data-title') || b.firstChild.textContent.trim()); });
+  });
+  document.getElementById('viewer-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', function () { body.innerHTML = ''; });
+})();
+
+(function () {
+  var btn = document.getElementById('copy-email');
+  var label = document.getElementById('email-text');
+  var email = 'yzhan878@jhu.edu';
+  btn.addEventListener('click', function () {
+    function done(msg) { label.textContent = msg; setTimeout(function () { label.textContent = email; }, 1600); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(label);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+    try {
+      navigator.clipboard.writeText(email).then(function () { done('Copied'); }, fallback);
+    } catch (e) { fallback(); }
+  });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a.link'));
+  var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function onScroll() {
+    var y = window.scrollY + 90, idx = -1;
+    secs.forEach(function (s, i) { if (s && s.offsetTop <= y) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
